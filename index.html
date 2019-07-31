@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        body{
+            padding: 0;
+            margin: 0;
+            font-family: 'Myriad Pro', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        ul{
+            margin: 0;
+            padding: 0;
+        }
+        li{
+            list-style: none;
+        }
+        .audio-wrap{
+            width: 100%;
+            height: 60px;
+            background-color: #000;
+        }
+        
+        .container{
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .player{
+            color: #fff;
+            max-width: 1200px;
+            margin: 0 auto;
+
+            display: -webkit-flex;
+            display: -moz-flex;
+            display: -ms-flex;
+            display: -o-flex;
+            display: flex;
+
+            justify-content: space-between;
+        }
+        .player-center{
+            flex: 1;
+            padding-left: 15px;
+            padding-right: 15px;
+
+            padding-top: 10px;
+            padding-bottom: 10px;
+        }
+
+        .state-media,
+        .playlist-btn{
+            height: 60px;
+            width: 60px;
+            background-color: #d41010;
+            font-size: 30px;
+            cursor: pointer;
+
+            display: -webkit-flex;
+            display: -moz-flex;
+            display: -ms-flex;
+            display: -o-flex;
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .state-media.play::before{
+            content: '\25B6';
+            width: block;
+        }
+        .state-media.pause::before{
+            content: '\23F8';
+            width: block;
+        }
+        .playlist-btn{
+            background-color: #343434;
+        }
+
+        .player-center-top{
+            display: -webkit-flex;
+            display: -moz-flex;
+            display: -ms-flex;
+            display: -o-flex;
+            display: flex;
+
+            justify-content: space-between;
+        }
+        .track-time{
+
+        }
+        .progress{
+            width: 400px;
+            height: 10px;
+            background-color: #343434;
+            margin-top: 8px;
+            cursor: pointer;
+            border-radius: 10px;
+        }
+        .crt-progress{
+            width: 0;
+            height: 10px;
+            background-color: #fff;
+            border-radius: 10px;
+        }
+    
+
+        .playlist-wrap{
+            background-color: #d41010;
+            color: #fff;
+            font-size: 20px;
+        }
+        .playlist-track{
+            display: -webkit-flex;
+            display: -moz-flex;
+            display: -ms-flex;
+            display: -o-flex;
+            display: flex;
+
+            justify-content: space-between;
+            border-bottom: 1px dashed #fff;
+            padding: 15px 0;
+            cursor: pointer;
+            transition: all .15s ease;
+        }
+        .playlist-track:last-child{
+            border-bottom: 1px dashed transparent;
+        }
+        .playlist-track>*{
+            flex-basis: 50%;
+            text-align: center;
+            /* border-right: 1px solid #000; */
+        }
+        .playlist-track .playlist-number{
+            flex-basis: 40px;
+        }
+        .playlist-track .playlist-duration{
+            flex-basis: 70px;
+        }
+        .playlist-head{
+            color: #f86969;
+            padding: 25px 0;  
+        }
+        .playlist-name{
+            text-decoration: underline;
+        }
+        .playlist-track:hover{
+            background-color: red;
+        }
+        .playlist-track:hover .playlist-name{
+            text-decoration: none;
+        }
+        .playlist-group,
+        .playlist-number{
+            color: #f86969;
+        }
+        .playlist-wrap-none{
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="audio-wrap">
+        <audio id="audio" style="display:none" src="1.mp3" controls></audio>
+
+
+        <div class="player">
+            <div  data-state="play" class="state-media play">
+                
+            </div>
+            <div class="player-center">
+                <div class="player-center-top">
+                    <div class="track-name">
+                        <span class="name">Первая песня</span> / <span class="author">Автор 1</span>
+                    </div>
+                    <div class="track-time">
+                        <span class="crt">0:00</span>/<span class="time">0:00</span> 
+                    </div>
+                </div>
+                <div id="progress" class="progress">
+                    <div class="crt-progress"></div>
+                </div>
+            </div>   
+            <div class="playlist-btn">
+                <span>&#9776;</span> 
+            </div>
+
+
+
+
+            <div style="display: none;">
+                    
+                    <div class="stop">Стоп</div>
+            </div>
+         
+        </div>
+
+
+    </div>
+
+    <div class="playlist-wrap">
+        <div class="container">
+            <ul id="playlist" class="playlist">
+            <li class="playlist-track playlist-head" >
+                    <div class="playlist-number">
+                        #
+                    </div>
+                    <div class="">
+                        Название
+                    </div>
+                    <div class="playlist-group">
+                       Группа
+                    </div>
+                    <div class="playlist-duration">
+                        Длина
+                    </div> 
+                
+                </li>
+                <li class="track playlist-track" data-track="1.mp3" data-name="Первая песня" data-author="Автор 1">
+                    <div class="playlist-number">
+                        1
+                    </div>
+                    <div class="playlist-name">
+                        Первая песня
+                    </div>
+                    <div class="playlist-group">
+                        Автор 1
+                    </div>
+                    <div class="playlist-duration">
+                        4:33
+                    </div> 
+                
+                </li>
+                <li class="track playlist-track" data-track="2.mp3" data-name="Вторая песня" data-author="Автор 2">
+                    <div class="playlist-number">
+                        2
+                    </div>
+                    <div class="playlist-name">
+                        Вторая песня
+                    </div>
+                    <div class="playlist-group">
+                        Автор 2
+                    </div>
+                    <div class="playlist-duration">
+                        4:22
+                    </div> 
+                </li>
+               
+            </ul>
+        </div>
+    </div>
+
+
+    <!-- <script src="http://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script> -->
+
+    <script>
+    
+    let audio = document.getElementById("audio");
+    let btnState = document.querySelector(".state-media"); 
+    let playlist = document.getElementById("playlist").getElementsByTagName("li");
+
+
+    for (let itemTrack of playlist) {
+        itemTrack.onclick = function(){
+            let track = this.getAttribute('data-track');
+            let name = this.getAttribute('data-name');
+            let author = this.getAttribute('data-author');
+
+            if(audio.getAttribute('src') == track ){
+
+                if(btnState.classList.contains('play')) {
+                    audio.play();
+                    btnState.classList.remove("play");
+                    btnState.classList.add("pause");
+                }else{
+                    audio.pause();
+                    btnState.classList.remove("pause");
+                    btnState.classList.add("play");
+                }
+                
+            } else{
+                audio.setAttribute('src', track);   
+                document.querySelector(".name").innerText = name;
+                document.querySelector(".author").innerText = author;
+                audio.play();
+                btnState.classList.remove("play");
+                btnState.classList.add("pause");
+            }
+           
+            
+        }
+    }
+
+    btnState.onclick = function(){
+        if(this.classList.contains('play')){
+            audio.play();
+            this.classList.remove("play");
+            this.classList.add("pause");
+        } else{
+            audio.pause();
+            this.classList.remove("pause");
+            this.classList.add("play");
+        }
+    }
+
+    document.getElementById('progress').onclick = function(e){
+        let progressWidth = this.offsetWidth;
+        console.log(progressWidth);
+        let a  = this.getBoundingClientRect().left + pageXOffset;
+        let curTimeX = e.clientX - a;
+        audio.currentTime = curTimeX * audio.duration / progressWidth;
+    }
+
+
+    audio.ontimeupdate = function(){
+        document.querySelector(".time").innerText = normTime(audio.duration);
+        document.querySelector(".crt").innerText = normTime(audio.currentTime);
+        document.querySelector(".crt-progress").style.width = audio.currentTime * 100 / audio.duration + '%';
+        
+    };
+
+    document.querySelector('.playlist-btn').onclick = function(){
+        document.querySelector('.playlist-wrap').classList.toggle("playlist-wrap-none");
+    }
+      
+   
+    function normTime(time) {
+        let hours = Math.trunc( time / 60 );
+        let minutes = ( Math.trunc(time % 60) < 10) ? '0' + Math.trunc(time % 60) : Math.trunc(time % 60);
+        let notmTime = hours  +  ':' +  minutes;
+        return notmTime;
+    }
+    
+    </script>
+</body>
+</html>
